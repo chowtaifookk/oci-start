@@ -44,14 +44,6 @@
 sudo apt update
 sudo apt install default-jdk
 ```
-
-### CentOS/RHEL
-```bash
-# CentOS 7
-sudo yum install java-1.8.0-openjdk-devel
-
-# CentOS 8及之后版本（使用dnf）
-sudo dnf install java-11-openjdk-devel
 ```
 
 ## 部署方法
@@ -59,7 +51,6 @@ sudo dnf install java-11-openjdk-devel
 ### 方法一：脚本部署
 *注意：新版本会检测安装Redis，之前安装了Redis的会有影响*
 
-```bash
 # 1. 切换到root用户下并创建文件夹
 mkdir -p oci-start && cd oci-start
 
@@ -114,6 +105,18 @@ docker logs oci-start
 # 端口自行指定（默认端口为9856，如果不想改默认端口，不需要下载oci-start.yml）
 server:
   port: 9856
+
+# 如果配置了域名访问,需要在ng上面配置如下配置
+  location ~ ^/websockify/(\d+)$ {
+        proxy_pass http://yourIp:$1;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_read_timeout 86400;
+    }
 ```
 
 ## 操作命令
@@ -163,15 +166,43 @@ chmod 777 oci-start.sh
 
 <img width="1264" alt="11" src="https://github.com/user-attachments/assets/72a5c4da-35c6-4be2-a60c-5989aefb74af" />
 
-## 捐赠者名单
+# 感谢捐赠者
 
-感谢所有支持本项目的捐赠者：
+非常感谢所有支持本项目的捐赠者！您的慷慨支持对我们至关重要。
 
-| 姓名 | 捐赠金额 | 日期 |
-|------|---------|------|
-| 匿名用户 | ¥9.9 | 2025-03-06 |
-| 匿名用户 | ¥100 | 2025-03-01 |
-| 匿名用户 | ¥200 | 2025-02-15 |
-| 匿名用户 | ¥50  | 2024-11-05 |
+## 捐赠记录
+
+| 序号 | 姓名 | 捐赠明细 | 日期 |
+|:----:|:----:|:--------:|:----:|
+| 14 | 匿名用户 | 云账号 | 2025-04-13 |
+| 13 | 匿名用户 | 云账号 | 2025-04-13 |
+| 12 | xdfaka | ¥68 | 2025-04-13 |
+| 11 | 匿名用户 | 云账号 | 2025-04-07 |
+| 10 | 匿名用户 | ¥50 | 2025-04-06 |
+| 9 | 匿名用户 | ¥9.9 | 2025-04-01 |
+| 8 | 匿名用户 | ¥10 | 2025-04-01 |
+| 7 | 匿名用户 | 云账号 | 2025-03-25 |
+| 6 | 柯南 | 云账号 | 2025-03-15 |
+| 5 | 匿名用户 | 云账号(升级) | 2025-03-08 |
+| 4 | 匿名用户 | ¥9.9 | 2025-03-06 |
+| 3 | 柯南 | ¥100 | 2025-03-01 |
+| 2 | 匿名用户 | ¥200 | 2025-02-15 |
+| 1 | 匿名用户 | ¥50 | 2024-11-05 |
+
+## 如何捐赠
+
+如果您想支持我们的项目，可以通过oci-start的关于捐赠二维码
+
+再次感谢您的支持！
 
 *如需将您的名字添加到捐赠者名单中，请在捐赠后联系项目维护者。*
+
+## 赞助
+赞助说明
+本项目大力感谢YxVM提供的服务器资源，也感谢NodeSeek论坛和社区的大力支持
+
+YxVM服务器：https://yxvm.com/aff.php?aff=762
+
+NodeSeek交流论坛提供的NodeSupport项目：https://github.com/NodeSeekDev/NodeSupport 赞助了本项目
+
+[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
